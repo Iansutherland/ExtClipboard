@@ -11,12 +11,14 @@ namespace ExtClipboardWPF.Services
         private LowLevelKeyboardProc _proc;
         private IntPtr _hookID = IntPtr.Zero;
         private Action<int> innerCallback;
+        private int LastKeyCode;
 
         public InterceptKeys(Action<int> action)
         {
             //accept an action<int> to call inside the HookCallback
             this.innerCallback = action;
             this._proc = this.HookCallback;
+            this.LastKeyCode = 0;
         }
 
         public void StartHook()
