@@ -1,4 +1,5 @@
 ﻿using ExtClipboardRedis;
+using ExtClipboardWPF.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,19 @@ namespace ExtClipboardWPF
     public partial class MainWindow : Window
     {
         private RedisRepository repository;
+        private InterceptKeys keyboardIntercept;
         public MainWindow()
         {
             InitializeComponent();
             this.repository = new RedisRepository();
+            this.keyboardIntercept = new InterceptKeys(InterceptKeyCallback);
+            this.keyboardIntercept.StartHook();
+        }
+
+        private void InterceptKeyCallback(int keyCode)
+        {
+            string text = $"keycode Pressed: {keyCode}";
+            this.listBox1.Items.Add(text);
         }
 
         private void GetRedisData()
@@ -38,11 +48,20 @@ namespace ExtClipboardWPF
                     this.listBox1.Items.Add(redisValue);
                 }
             }
+            else
+            {
+                this.listBox1.Items.Add("No values in redis list \"testList\"");
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             GetRedisData();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            keyboardIntercept.EndHook();
         }
     }
 }
