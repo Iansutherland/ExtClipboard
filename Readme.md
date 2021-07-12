@@ -1,7 +1,7 @@
 ## This solution contains an application that attempts to extend the Winodws Clipboard
 
 -Captures clipboard items and saves them in Redis
--Allows user to paste anyting from the extended clipboard
+-Allows user to paste anything from the extended clipboard
 
 ## [Redis](https://redis.io/commands/)
 I'm running Redis in a docker container

@@ -32,9 +32,9 @@ namespace ExtClipboardWPF
             this.keyboardIntercept.StartHook();
         }
 
-        private void InterceptKeyCallback(int keyCode)
+        private void InterceptKeyCallback(char character, int virtualKeyCode)
         {
-            string text = $"keycode Pressed: {keyCode}";
+            string text = $"keycode Pressed: {character}";
             this.listBox1.Items.Add(text);
         }
 
